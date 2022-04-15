@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Luk4x/DevClub-pratica-geral.git"
+        "url": "git+https://github.com/Luk4x/DevClub-first-project-node.git"
     },
     "keywords": [
         "node",
@@ -19,9 +19,9 @@
     "author": "Luk4x",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Luk4x/DevClub-pratica-geral/issues"
+        "url": "https://github.com/Luk4x/DevClub-first-project-node.git/issues"
     },
-    "homepage": "https://github.com/Luk4x/DevClub-pratica-geral#readme",
+    "homepage": "https://github.com/Luk4x/DevClub-first-project-node.git#readme",
     "dependencies": {
         "express": "^4.17.3"
     },

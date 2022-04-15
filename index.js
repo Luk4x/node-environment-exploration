@@ -10,25 +10,48 @@ app.listen(port, () => {
 
 // routes
 
-app.get('/', (req, res) => {
+app.get('/nightraid-members', (req, res) => {
     console.log(req);
     console.log(req.query);
 
     // verify if query object is empty. if yes, i'll show a visual result, if no, i'll show a .json result.
     if (Object.keys(req.query).length !== 0) {
-        // ?name=NightRaid&members=10
+        // ?orgName=NightRaid&totMembers=10 (pattern to query request)
 
         // const name = req.query.name;
         // const members = req.query.members;
-        const { name, members } = req.query; // Destructuring Assignment
+        const { orgName, totMembers } = req.query; // Destructuring Assignment
 
-        console.log(name, members);
-        return res.json({ name, members }); // = {name: name, members: members}
+        console.log(orgName, totMembers);
+        return res.json({ orgName, totMembers }); // = {orgName: orgName, totMembers: totMembers}
     } else {
-        return res.send('<img style="display:block; margin:auto; max-width:1350px;" src="https://images5.alphacoders.com/605/thumb-1920-605794.jpg" alt="nightraid image" /> <p style="text-align: center">Name: NightRaid, Members: 10.</p>');
+        return res.send('<img style="display:block; margin:auto; max-width:1350px;" src="https://images5.alphacoders.com/605/thumb-1920-605794.jpg" alt="nightraid image" /> <p style="text-align: center">Organization Name: NightRaid, Number of main members: 10.</p>');
     }
 });
 
+app.get('/nightraid-members/:memberName', (req, res) => {
+    console.log(req);
+    console.log(req.query);
+    console.log(req.params);
+
+    const { memberName } = req.params;
+    const members = {
+        akame: {
+            img: 'https://i.pinimg.com/originals/4e/17/1f/4e171f30cff1f8847b7b1822ea21effe.jpg',
+            name: 'Akame',
+            age: 16
+        }
+    };
+    console.log(members[memberName]);
+
+    if (Object.keys(req.query).length !== 0) {
+        return res.send('a');
+    } else {
+        return res.send(`<img style="display:block; margin:auto; max-width:750px;" src=${members[memberName].img} alt="${members[memberName].name} image" /> <p style="text-align: center">Name: ${members[memberName].name}, Age: ${members[memberName].age}s.</p>`);
+    }
+});
+
+/*
 app.get('/akame', (req, res) => {
     if (Object.keys(req.query).length !== 0) {
         // ?name=Akame&age=16
@@ -75,3 +98,4 @@ app.get('/bulat', (req, res) => {
 app.get('/susanoo', (req, res) => {
     return res.send('<img style="display:block; margin:auto; max-width:750px;" src="https://assets.mycast.io/actor_images/actor-susanoo-akame-ga-kill-304043_large.jpg?1637123241" alt="susanoo image" /> <p style="text-align: center">Name: Susanoo, Age: Approx. 1000s.</p>');
 });
+*/

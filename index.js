@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 // listening to the port
@@ -14,18 +15,36 @@ app.get('/nightraid-members', (req, res) => {
     console.log(req.query);
     console.log('\nreq.params:');
     console.log(req.params);
+    console.log('\nreq.body:');
+    console.log(req.body);
     console.log();
 
-    // verify if query object is empty. if yes, i'll show a visual result, if no, i'll show a .json result.
-    if (Object.keys(req.query).length !== 0) {
-        // ?orgName=NightRaid&orgMembers=10 (pattern to query request)
+    // verify if query or body object isn't empty. if yes, i'll show a visual result, if no, i'll show a .json result.
+    if (Object.keys(req.query).length !== 0 || Object.keys(req.body).length !== 0) {
+        // function to take the parameter type to avoid code repetition
+        const getParam = () => {
+            if (Object.keys(req.query).length !== 0) {
+                // ?orgName=NightRaid&orgMembers=10 (pattern to query request)
+                return 'query';
+            } else {
+                /* 
+                {
+                    "orgName": "NightRaid",
+                    "orgMembers": 10
+                }
+                (pattern to body request)
+            */
+                return 'body';
+            }
+        };
+        console.log('param type: ', getParam(), '\n');
 
-        // const name = req.query.name;
-        // const members = req.query.members;
-        const { orgName, orgMembers } = req.query; // Destructuring Assignment
+        // const orgName = req[getParam()].orgName;
+        // const orgMembers = req[getParam()].orgMembers;
+        const { orgName, orgMembers } = req[getParam()]; // Destructuring Assignment
 
-        console.log('response.json values:', orgName, orgMembers);
-        return res.json({ orgName, orgMembers }); // = {orgName: orgName, orgMembers: orgMembers}
+        console.log('response.json values: ', orgName, orgMembers, getParam());
+        return res.json({ orgName, orgMembers, paramType: getParam() }); // return res.json({orgName: orgName, orgMembers: orgMembers})
     } else {
         return res.send('<img style="display:block; margin:auto; max-width:1350px;" src="https://images5.alphacoders.com/605/thumb-1920-605794.jpg" alt="nightraid image" /> <p style="text-align: center">Organization Name: NightRaid, Number of main members: 10.</p>');
     }
@@ -37,15 +56,20 @@ app.get('/nightraid-members/:memberName', (req, res) => {
     console.log(req.query);
     console.log('\nreq.params:');
     console.log(req.params);
+    console.log('\nreq.body:');
+    console.log(req.body);
     console.log();
 
     // verify if query object is empty. if yes, i'll show a visual result, if no, i'll show a .json result.
-    if (Object.keys(req.query).length !== 0) {
-        // ?name=Akame&age=16
-        const { name, age } = req.query;
-        console.log('response.json values:', name, age);
+    if (Object.keys(req.query).length !== 0 || Object.keys(req.body).length !== 0) {
+        if (Object.keys(req.query).length !== 0) {
+            // ?name=Akame&age=16
+            const { name, age } = req.query;
+            console.log('response.json values:', name, age);
 
-        return res.json({ name, age });
+            return res.json({ name, age });
+        } else {
+        }
     } else {
         const { memberName } = req.params;
 

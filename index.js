@@ -9,7 +9,7 @@ app.listen(port, () => {
 });
 
 // routes
-app.get('/nightraid-members', (req, res) => {
+app.get('/nightraid', (req, res) => {
     console.log(req);
     console.log('\nreq.query:');
     console.log(req.query);
@@ -21,20 +21,20 @@ app.get('/nightraid-members', (req, res) => {
 
     // verify if query or body object isn't empty. if yes, i'll show a visual result, if no, i'll show a .json result.
     if (Object.keys(req.query).length !== 0 || Object.keys(req.body).length !== 0) {
-        console.log('param type: ', getParam(req), '\n');
+        console.log('param type:', getParam(req), '\n');
 
-        // const orgName = req[getParam(req)].orgName;
-        // const orgMembers = req[getParam(req)].orgMembers;
-        const { orgName, orgMembers } = req[getParam(req)]; // Destructuring Assignment
+        // const fOrgName = req[getParam(req)].fOrgName;
+        // const fOrgMembers = req[getParam(req)].fOrgMembers;
+        const { fOrgName, fOrgMembers } = req[getParam(req)]; // Destructuring Assignment
 
-        console.log('response.json values: ', orgName, orgMembers, getParam(req));
-        return res.json({ orgName, orgMembers, paramType: getParam(req) }); // return res.json({orgName: orgName, orgMembers: orgMembers})
+        console.log('Front-end values:', fOrgName, fOrgMembers);
+        return res.json({ FrontendOrgName: fOrgName, FrontendOrgMembers: fOrgMembers, nightraid: getMember('nightraid'), paramType: getParam(req) });
     } else {
-        return res.send('<img style="display:block; margin:auto; max-width:620px;" src="https://images5.alphacoders.com/605/thumb-1920-605794.jpg" alt="nightraid image" /> <p style="text-align: center">Organization Name: NightRaid, Number of main members: 10.</p>');
+        return res.send(`<img style="display:block; margin:auto; max-width:620px;" src=${getMember('nightraid', 'orgImg')} alt="Nightraid image" /> <p style="text-align: center">Organization Name: ${getMember('nightraid', 'orgName')}, Number of main members: ${getMember('nightraid', 'orgMembers')}.</p>`);
     }
 });
 
-app.get('/nightraid-members/:memberName', (req, res) => {
+app.get('/nightraid/:memberName', (req, res) => {
     console.log(req);
     console.log('\nreq.query:');
     console.log(req.query);
@@ -44,20 +44,18 @@ app.get('/nightraid-members/:memberName', (req, res) => {
     console.log(req.body);
     console.log();
 
-    // verify if query object is empty. if yes, i'll show a visual result, if no, i'll show a .json result.
+    const { memberName } = req.params;
+
+    // verify if query or body object is empty. if yes, i'll show a visual result, if no, i'll show a .json result.
     if (Object.keys(req.query).length !== 0 || Object.keys(req.body).length !== 0) {
-        if (Object.keys(req.query).length !== 0) {
-            // ?name=Akame&age=16
-            const { name, age } = req.query;
-            console.log('response.json values:', name, age);
+        console.log('param type:', getParam(req), '\n');
 
-            return res.json({ name, age });
-        } else {
-        }
+        const { fName, fAge } = req[getParam(req)];
+
+        console.log('Front-end values:', fName, fAge);
+        return res.json({ FrontendName: fName, FrontendAge: fAge, [memberName]: getMember(memberName), paramType: getParam(req) });
     } else {
-        const { memberName } = req.params;
-
-        console.log(memberName + ' all info:', getMember(memberName));
+        console.log(memberName, 'all info:', getMember(memberName));
 
         return res.send(`<img style="display:block; margin:auto; max-width:620px;" src="${getMember(memberName, 'img')}" alt="${getMember(memberName, 'name')} image" /> <p style="text-align: center">Name: ${getMember(memberName, 'name')}, Age: ${getMember(memberName, 'age')}s.</p>`);
     }
@@ -66,16 +64,28 @@ app.get('/nightraid-members/:memberName', (req, res) => {
 // function to take the parameter type to avoid code repetition
 const getParam = req => {
     if (Object.keys(req.query).length !== 0) {
-        // ?orgName=NightRaid&orgMembers=10 (pattern to query request)
+        /*
+            initial page query request pattern: ?fOrgName=NightRaid&fOrgMembers=10
+            
+            members page query request pattern: ?fName=Akame&fAge=16
+        */
+
         return 'query';
     } else {
         /* 
-        {
-            "orgName": "NightRaid",
-            "orgMembers": 10
-        }
-        (pattern to body request)
-    */
+        initial page body request pattern:
+            {
+                "fOrgName": "NightRaid",
+                "fOrgMembers": 10
+            }
+
+        members page body request pattern:
+            {
+                "fName": "Akame",
+                "fAge": 16
+            }
+        */
+
         return 'body';
     }
 };
@@ -83,6 +93,11 @@ const getParam = req => {
 // nightraid members
 const getMember = function (name, info) {
     members = {
+        nightraid: {
+            orgImg: 'https://images5.alphacoders.com/605/thumb-1920-605794.jpg',
+            orgName: 'NightRaid',
+            orgMembers: 10
+        },
         akame: {
             img: 'https://i.pinimg.com/originals/4e/17/1f/4e171f30cff1f8847b7b1822ea21effe.jpg',
             name: 'Akame',

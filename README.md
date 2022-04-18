@@ -1,4 +1,4 @@
-# NightRaid (v1?)
+# NightRaid-v1
 
 ## About
 

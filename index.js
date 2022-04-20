@@ -50,12 +50,35 @@ app.post('/NightRaid', (req, res) => {
     console.log(req.body);
     console.log();
 
-    const member2 = ({ img, name, age } = req[getParam(req)]);
-    members.member2;
-    return res.status(201).json(member2);
+    /*
+        pattern:
+        {
+            "img": "https://static.wikia.nocookie.net/akamegakill/images/0/03/Tatsumi%27s_Incursio.png/revision/latest?cb=20141101020933",
+            "name": "Incursio",
+            "age": null
+        }
+
+        {
+            "img": "https://static.wikia.nocookie.net/akamegakill/images/0/0c/Tumblr_ncxciwC4Ky1txrzruo2_r1_500.png/revision/latest?cb=20141005160441",
+            "name": "Easdeath",
+            "age": 20
+        }
+
+        {
+            "img": "https://static.wikia.nocookie.net/akamegakill/images/2/2b/Kurome_main.png/revision/latest?cb=20140824205818",
+            "name": "Kurome",
+            "age": 15
+        }
+    */
+    const newMember = ({ img, name, age } = req[getParam(req)]);
+    console.log('adding new member:', newMember);
+
+    members.push(newMember);
+
+    res.status(201).json(newMember);
 });
 
-// view specific member (http://localhost:3000/NightRaid/Akame === http://localhost:3000/NightRaid/0)
+// view specific member (cccchttp://localhost:3000/NightRaid/Akame === http://localhost:3000/NightRaid/0)
 app.get('/NightRaid/:member', (req, res) => {
     console.log(req);
     console.log('\nreq.query:');

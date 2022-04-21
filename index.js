@@ -72,7 +72,7 @@ app.post('/NightRaid', (req, res) => {
     */
 
     const { img, name, age } = req[getParam(req)];
-    const newMember = { img, name, age };
+    const newMember = { img, name, age }; // const newMember = ({ img, name, age } = req[getParam(req)]); - inaccurate.
     console.log('adding new member:', newMember);
 
     members.push(newMember);
@@ -125,6 +125,9 @@ app.put('/NightRaid/:member', (req, res) => {
 
     // getting member id
     const { member } = req.params;
+    if (getMember(member) === 404) {
+        return res.status(404).json({ message: 'Member not Found' });
+    }
 
     // getting member updated info
     const { img, name, age } = req[getParam(req)];
@@ -133,8 +136,9 @@ app.put('/NightRaid/:member', (req, res) => {
     console.log(updatedMember);
 
     // adding member in array and returning updated member
-    members[member] = updatedMember;
-    return res.status(202).json({ updatedMember });
+    const oldMember = getMember(member);
+    updateMember(member, updatedMember);
+    return res.json({ oldMember, updatedMember });
 });
 
 // function to take the parameter type to avoid code repetition
@@ -201,23 +205,44 @@ const members = [
 ];
 
 // function to get member
-const getMember = (member, info) => {
-    if (members.find(fMember => fMember.name === member)) {
+const getMember = (memberId, info) => {
+    if (members.find(fMember => fMember.name === memberId)) {
         // using member id by name
-        const rMember = members.find(fMember => fMember.name === member);
+
+        // getting member by name
+        const rMember = members.find(fMember => fMember.name === memberId);
         if (info) {
             return rMember[info];
         } else {
             return rMember;
         }
-    } else if (members[member]) {
+    } else if (members[memberId]) {
         // using member id by array index
+
         if (info) {
-            return members[member][info];
+            return members[memberId][info];
         } else {
-            return members[member];
+            return members[memberId];
         }
     } else {
         return 404;
+    }
+};
+
+// function to update member
+const updateMember = (memberId, updatedMember) => {
+    if (members.findIndex(fMember => fMember.name === memberId) >= 0) {
+        // using member id by name
+
+        // getting the member index by name
+        const rMember = members.findIndex(fMember => fMember.name === memberId);
+        console.log(rMember);
+
+        //adding member in the array
+        members[rMember] = updatedMember;
+    } else {
+        // using member id by array index
+
+        members[memberId] = updatedMember;
     }
 };

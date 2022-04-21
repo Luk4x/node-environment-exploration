@@ -1,5 +1,7 @@
 const express = require('express');
+const res = require('express/lib/response');
 const { get } = require('express/lib/response');
+const { restart } = require('nodemon');
 const app = express();
 app.use(express.json());
 const port = 3000;
@@ -12,8 +14,7 @@ app.listen(port, () => {
 // routes
 
 // view all members
-app.get('/nightraid', (req, res) => {
-    console.log(req);
+app.get('/NightRaid', (req, res) => {
     console.log('\nreq.query:');
     console.log(req.query);
     console.log('\nreq.params:');
@@ -41,7 +42,6 @@ app.get('/nightraid', (req, res) => {
 
 // add member
 app.post('/NightRaid', (req, res) => {
-    console.log(req);
     console.log('\nreq.query:');
     console.log(req.query);
     console.log('\nreq.params:');
@@ -55,7 +55,7 @@ app.post('/NightRaid', (req, res) => {
         {
             "img": "https://static.wikia.nocookie.net/akamegakill/images/0/03/Tatsumi%27s_Incursio.png/revision/latest?cb=20141101020933",
             "name": "Incursio",
-            "age": null
+            "age": 500
         }
 
         {
@@ -70,17 +70,17 @@ app.post('/NightRaid', (req, res) => {
             "age": 15
         }
     */
-    const newMember = ({ img, name, age } = req[getParam(req)]);
+
+    const { img, name, age } = req[getParam(req)];
+    const newMember = { img, name, age };
     console.log('adding new member:', newMember);
 
     members.push(newMember);
-
     res.status(201).json(newMember);
 });
 
-// view specific member (cccchttp://localhost:3000/NightRaid/Akame === http://localhost:3000/NightRaid/0)
+// view specific member, the id can be: http://localhost:3000/NightRaid/Akame or http://localhost:3000/NightRaid/0
 app.get('/NightRaid/:member', (req, res) => {
-    console.log(req);
     console.log('\nreq.query:');
     console.log(req.query);
     console.log('\nreq.params:');
@@ -90,6 +90,9 @@ app.get('/NightRaid/:member', (req, res) => {
     console.log();
 
     const { member } = req.params;
+    if (getMember(member) === 404) {
+        return res.status(404).json({ message: 'Member not Found' });
+    }
 
     /* 
     query request pattern: ?returnJson=true
@@ -108,6 +111,30 @@ app.get('/NightRaid/:member', (req, res) => {
 
         return res.send(`<img style="display:block; margin:auto; max-width:620px;" src="${getMember(member, 'img')}" alt="${getMember(member, 'name')} image" /> <p style="text-align: center">Name: ${getMember(member, 'name')}, Age: ${getMember(member, 'age')}s.</p>`);
     }
+});
+
+// update member. id can be: http://localhost:3000/NightRaid/Akame or http://localhost:3000/NightRaid/0
+app.put('/NightRaid/:member', (req, res) => {
+    console.log('\nreq.query:');
+    console.log(req.query);
+    console.log('\nreq.params:');
+    console.log(req.params);
+    console.log('\nreq.body:');
+    console.log(req.body);
+    console.log();
+
+    // getting member id
+    const { member } = req.params;
+
+    // getting member updated info
+    const { img, name, age } = req[getParam(req)];
+    const updatedMember = { img, name, age };
+    console.log(`updated member(${member}):`);
+    console.log(updatedMember);
+
+    // adding member in array and returning updated member
+    members[member] = updatedMember;
+    return res.status(202).json({ updatedMember });
 });
 
 // function to take the parameter type to avoid code repetition
@@ -175,36 +202,22 @@ const members = [
 
 // function to get member
 const getMember = (member, info) => {
-    if (typeof TryParseInt(member, null) === 'number' || typeof member === 'number') {
-        // number route
+    if (members.find(fMember => fMember.name === member)) {
+        // using member id by name
+        const rMember = members.find(fMember => fMember.name === member);
+        if (info) {
+            return rMember[info];
+        } else {
+            return rMember;
+        }
+    } else if (members[member]) {
+        // using member id by array index
         if (info) {
             return members[member][info];
         } else {
             return members[member];
         }
     } else {
-        // alternative name route
-        for (const fMember of members) {
-            if (member === fMember.name) {
-                if (info) {
-                    return fMember[info];
-                } else {
-                    return fMember;
-                }
-            }
-        }
+        return 404;
     }
 };
-
-// try parse int member function (like C#)
-function TryParseInt(str, defaultValue) {
-    let retValue = defaultValue;
-    if (str !== null) {
-        if (str.length > 0) {
-            if (!isNaN(str)) {
-                retValue = parseInt(str);
-            }
-        }
-    }
-    return retValue;
-}

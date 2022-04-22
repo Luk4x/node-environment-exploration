@@ -41,9 +41,10 @@ $ cd DevClub-first-project-node
 # Instalar dependências 
 $ npm i
 
-# Execute o projeto
+# Executar o projeto
 $ npm run app
 
+# O servidor irá iniciar em http://localhost:3000/NightRaid
 ```
 <br>
 

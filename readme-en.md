@@ -26,8 +26,27 @@ In general, there is more information in the video and commented in the code abo
 <p align="center">
   <video src="https://user-images.githubusercontent.com/86276393/163866285-1b695498-8fc5-4d8a-a99a-160ac3599c70.mp4">
 </p>
-<br><br>
-  
+<br>
+
+## How to Use
+<p>To clone and run this application, you'll need <a href="https://git-scm.com/">Git</a> and <a href="https://nodejs.org/">Node.js v16.13.2</a> or higher installed on your computer.<br>In terminal:</p>
+
+```bash
+# Clone this repository
+$ git clone https://github.com/Luk4x/DevClub-first-project-node.git
+
+# Go into the repository
+$ cd DevClub-first-project-node
+
+# Install dependencies
+$ npm i
+
+# Run the project
+$ npm run app
+
+```
+<br>
+
 ## Contributors Contact
 <table>
   <tr>

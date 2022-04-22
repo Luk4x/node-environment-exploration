@@ -1,10 +1,12 @@
-# NightRaid-v1
+# NightRaid
+
+This was a project that I used as a testing environment to explore a little about what I was studying at the moment: <strong>Nodejs, Expressjs, HTTP methods and params.</strong>
 
 ## About
 
-Meu objetivo era criar uma página para a NightRaid, sendo que teria uma página inicial de apresentação dos membros, e teria uma página dedicada a cada membro, todas contendo informações básicas e dinamicas. Cada rota tem 2 possíveis resultados: um visual, mostrado sempre quando o cliente acessa a rota sem enviar nenhum parâmetro, e um .json, mostrado sempre que o cliente envia um query ou body param (padrão de requisição dos parâmetros comentado no código).
-A primeira rota é uma rota inicial, com informações do grupo, e baseada nela, utilizando route params, eu crio rotas dinamicamente para cada membro tendo como identificador o nome do mesmo.
-O retorno visual contém apenas informações registradas no back-end, já o retorno .json contém, além também das informações do back-end, as informações que o cliente passou pelos parâmetros (e também o tipo de parâmetro).
+Meu objetivo foi criar algo simples com tais tecnologias, portanto, pensei em criar uma página para a <a href="https://akamegakill.fandom.com/wiki/Night_Raid">NightRaid</a>, já com todos os principais membros listados, e com possibilidade de adicionar novos membros, atualizá-los, ou deletá-los.
+Mesmo sendo um pouco incoerênte num projeto back-end, nas rotas de tipo <code>GET</code> eu coloquei uma resposta visual por patrão, mas o <code>.Json</code> pode ser acessado caso seja passado o parâmetro <code>?returnJson=true</code> ou <code>"returnJson": true</code>, como mostrado no vídeo.
+Em geral, tem mais informações no vídeo e comentadas no código sobre os padrões de requisição, explicações sobre as rotas... 
 
 ## Result
 

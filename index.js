@@ -141,6 +141,25 @@ app.put('/NightRaid/:member', (req, res) => {
     return res.json({ oldMember, updatedMember });
 });
 
+app.delete('/NightRaid/:member', (req, res) => {
+    console.log('\nreq.query:');
+    console.log(req.query);
+    console.log('\nreq.params:');
+    console.log(req.params);
+    console.log('\nreq.body:');
+    console.log(req.body);
+    console.log();
+
+    const { member } = req.params;
+    if (getMember(member) === 404) {
+        return res.status(404).json({ message: 'Member not Found' });
+    }
+
+    console.log('deleting member:', getMember(member));
+    delMember(member);
+    return res.status(204).json();
+});
+
 // function to take the parameter type to avoid code repetition
 const getParam = req => {
     if (Object.keys(req.query).length !== 0) {
@@ -235,14 +254,27 @@ const updateMember = (memberId, updatedMember) => {
         // using member id by name
 
         // getting the member index by name
-        const rMember = members.findIndex(fMember => fMember.name === memberId);
-        console.log(rMember);
+        const memberIndex = members.findIndex(fMember => fMember.name === memberId);
+        console.log(memberIndex);
 
         //adding member in the array
-        members[rMember] = updatedMember;
+        members[memberIndex] = updatedMember;
     } else {
         // using member id by array index
 
         members[memberId] = updatedMember;
+    }
+};
+
+const delMember = memberId => {
+    if (members.findIndex(fMember => fMember.name === memberId) >= 0) {
+        // getting the member index by name
+        const memberIndex = members.findIndex(fMember => fMember.name === memberId);
+
+        // deleting member
+        members.splice(memberIndex, 1);
+    } else {
+        // using member id by array index
+        members.splice(memberId, 1);
     }
 };

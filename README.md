@@ -27,6 +27,25 @@ Em geral, tem mais informações no vídeo e comentadas no código sobre os padr
   <video src="https://user-images.githubusercontent.com/86276393/163866285-1b695498-8fc5-4d8a-a99a-160ac3599c70.mp4">
 </p>
 <br>
+  
+## Como usar
+<p>Para clonar e executar este projeto, você precisará do <a href="https://git-scm.com/">Git</a>, <a href="https://nodejs.org/">Node.js v16.13.2</a> ou superior instalado em seu computador.<br>No terminal:</p>
+
+```bash
+# Clone esse repositório:
+$ git clone https://github.com/Luk4x/DevClub-first-project-node.git
+
+# Entre no repositório:
+$ cd DevClub-first-project-node
+
+# Instalar dependências 
+$ npm i
+
+# Execute o projeto
+$ npm run app
+
+```
+<br>
 
 ## Contato dos Contribuintes
 <table>

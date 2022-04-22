@@ -44,6 +44,7 @@ $ npm i
 # Run the project
 $ npm run app
 
+# The server will start at http://localhost:3000/NightRaid
 ```
 <br>
 

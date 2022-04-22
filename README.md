@@ -24,7 +24,7 @@ Em geral, tem mais informações no vídeo e comentadas no código sobre os padr
 
 ## Resultado
 <p align="center">
-  <video src="https://user-images.githubusercontent.com/86276393/163866285-1b695498-8fc5-4d8a-a99a-160ac3599c70.mp4">
+  <video src="https://user-images.githubusercontent.com/86276393/164738153-1c1c7df2-d5a3-46e7-9417-27c00df6e321.mp4">
 </p>
 <br>
   

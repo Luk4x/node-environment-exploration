@@ -18,7 +18,8 @@ Este foi um projeto que usei como ambiente de testes para explorar um pouco sobr
 
 ## Sobre
 Meu objetivo foi criar algo simples com tais tecnologias, portanto, pensei em criar uma página para a <a href="https://akamegakill.fandom.com/wiki/Night_Raid">NightRaid</a>, já com todos os principais membros listados, e com possibilidade de adicionar novos membros, atualizá-los, ou deletá-los.
-Mesmo sendo um pouco incoerente num projeto back-end, nas rotas de tipo <code>GET</code> eu coloquei uma resposta visual por patrão, mas o <code>.Json</code> pode ser acessado caso seja passado o parâmetro <code>?returnJson=true</code> ou <code>"returnJson": true</code>, como mostrado no vídeo.
+Mesmo sendo um pouco incoerente num projeto back-end, nas rotas de tipo <code>GET</code> eu coloquei uma resposta visual por patrão, mas o <code>.Json</code> pode ser acessado caso seja passado o parâmetro <code>?returnJson=true</code> ou <code>"returnJson": true</code>, como mostrado no vídeo.<br>
+Um membro pode ser acessado/manipulado tanto pelo seu <code>índex do array</code> quanto pelo seu <code>name</code>.<br>
 Em geral, tem mais informações no vídeo e comentadas no código sobre os padrões de requisição, explicações sobre as rotas...
 <br><br>
 

@@ -11,17 +11,42 @@ app.listen(port, () => {
     console.log('✔️ Server started.');
 });
 
-// routes
-
-// view all members
-app.get('/NightRaid', (req, res) => {
-    console.log('\nreq.query:');
+// middlewares
+const consoleLog = (req, res, next) => {
+    console.log('req.query:');
     console.log(req.query);
     console.log('\nreq.params:');
     console.log(req.params);
     console.log('\nreq.body:');
     console.log(req.body);
-    console.log();
+    next();
+};
+app.use(consoleLog);
+
+const checkMemberExistence = (req, res, next) => {
+    console.log('in checkMemberExistence middleware');
+
+    const memberId = req.params.member;
+    if (getMember(memberId) === 404) return res.status(404).json({ error: 'Member not Found' });
+
+    req.memberId = memberId;
+
+    if (members.findIndex(fMember => fMember.name === memberId) >= 0) {
+        // using member id by name
+        req.memberIndex = members.findIndex(fMember => fMember.name === memberId);
+    } else {
+        // using member id by array index
+        req.memberIndex = memberId;
+    }
+
+    next();
+};
+
+// routes
+
+// view all members
+app.get('/NightRaid', (req, res) => {
+    console.log('in GET: /NightRaid');
 
     /* 
     query request pattern: ?returnJson=true
@@ -42,13 +67,7 @@ app.get('/NightRaid', (req, res) => {
 
 // add member
 app.post('/NightRaid', (req, res) => {
-    console.log('\nreq.query:');
-    console.log(req.query);
-    console.log('\nreq.params:');
-    console.log(req.params);
-    console.log('\nreq.body:');
-    console.log(req.body);
-    console.log();
+    console.log('in POST: /NightRaid');
 
     /*
         pattern:
@@ -80,20 +99,11 @@ app.post('/NightRaid', (req, res) => {
 });
 
 // view specific member, the id can be: http://localhost:3000/NightRaid/Akame or http://localhost:3000/NightRaid/0
-app.get('/NightRaid/:member', (req, res) => {
-    console.log('\nreq.query:');
-    console.log(req.query);
-    console.log('\nreq.params:');
-    console.log(req.params);
-    console.log('\nreq.body:');
-    console.log(req.body);
-    console.log();
+app.get('/NightRaid/:member', checkMemberExistence, (req, res) => {
+    console.log('in GET: /NightRaid:member');
 
-    const { member } = req.params;
-    if (getMember(member) === 404) {
-        return res.status(404).json({ message: 'Member not Found' });
-    }
-
+    // getting member id by checkMemberExistence middleware
+    const member = req.memberId;
     /* 
     query request pattern: ?returnJson=true
     
@@ -107,27 +117,19 @@ app.get('/NightRaid/:member', (req, res) => {
         console.log('request type:', getParam(req), '\n');
         return res.json({ member: getMember(member), requestType: getParam(req) });
     } else {
-        console.log('member info:', getMember(member));
+        console.log(`member(${member}) info:`, getMember(member));
 
         return res.send(`<img style="display:block; margin:auto; max-width:620px;" src="${getMember(member, 'img')}" alt="${getMember(member, 'name')} image" /> <p style="text-align: center">Name: ${getMember(member, 'name')}, Age: ${getMember(member, 'age')}s.</p>`);
     }
 });
 
 // update member. id can be: http://localhost:3000/NightRaid/Akame or http://localhost:3000/NightRaid/0
-app.put('/NightRaid/:member', (req, res) => {
-    console.log('\nreq.query:');
-    console.log(req.query);
-    console.log('\nreq.params:');
-    console.log(req.params);
-    console.log('\nreq.body:');
-    console.log(req.body);
-    console.log();
+app.put('/NightRaid/:member', checkMemberExistence, (req, res) => {
+    console.log('in PUT: /NightRaid:member');
 
-    // getting member id
-    const { member } = req.params;
-    if (getMember(member) === 404) {
-        return res.status(404).json({ message: 'Member not Found' });
-    }
+    // getting member id by checkMemberExistence middleware
+    const member = req.memberId;
+    const memberIndex = req.memberIndex;
 
     // getting member updated info
     const { img, name, age } = req[getParam(req)];
@@ -135,28 +137,22 @@ app.put('/NightRaid/:member', (req, res) => {
     console.log(`updated member(${member}):`);
     console.log(updatedMember);
 
-    // adding member in array and returning updated member
     const oldMember = getMember(member);
-    updateMember(member, updatedMember);
+
+    // adding member in array and returning updated member
+    members[memberIndex] = updatedMember;
     return res.json({ oldMember, updatedMember });
 });
 
-app.delete('/NightRaid/:member', (req, res) => {
-    console.log('\nreq.query:');
-    console.log(req.query);
-    console.log('\nreq.params:');
-    console.log(req.params);
-    console.log('\nreq.body:');
-    console.log(req.body);
-    console.log();
+app.delete('/NightRaid/:member', checkMemberExistence, (req, res) => {
+    console.log('in DELETE: /NightRaid:member');
 
-    const { member } = req.params;
-    if (getMember(member) === 404) {
-        return res.status(404).json({ message: 'Member not Found' });
-    }
+    // getting member id by checkMemberExistence middleware
+    const member = req.memberId;
+    const memberIndex = req.memberIndex;
 
     console.log('deleting member:', getMember(member));
-    delMember(member);
+    members.splice(memberIndex, 1);
     return res.status(204).json();
 });
 
@@ -245,36 +241,5 @@ const getMember = (memberId, info) => {
         }
     } else {
         return 404;
-    }
-};
-
-// function to update member
-const updateMember = (memberId, updatedMember) => {
-    if (members.findIndex(fMember => fMember.name === memberId) >= 0) {
-        // using member id by name
-
-        // getting the member index by name
-        const memberIndex = members.findIndex(fMember => fMember.name === memberId);
-        console.log(memberIndex);
-
-        //adding member in the array
-        members[memberIndex] = updatedMember;
-    } else {
-        // using member id by array index
-
-        members[memberId] = updatedMember;
-    }
-};
-
-const delMember = memberId => {
-    if (members.findIndex(fMember => fMember.name === memberId) >= 0) {
-        // getting the member index by name
-        const memberIndex = members.findIndex(fMember => fMember.name === memberId);
-
-        // deleting member
-        members.splice(memberIndex, 1);
-    } else {
-        // using member id by array index
-        members.splice(memberId, 1);
     }
 };

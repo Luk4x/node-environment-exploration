@@ -1,28 +1,9 @@
 const express = require('express');
-const res = require('express/lib/response');
-const { get } = require('express/lib/response');
-const { restart } = require('nodemon');
 const app = express();
 app.use(express.json());
 const port = 3000;
 
-// listening to the port
-app.listen(port, () => {
-    console.log('✔️ Server started.');
-});
-
-// middlewares
-const consoleLog = (req, res, next) => {
-    console.log('req.query:');
-    console.log(req.query);
-    console.log('\nreq.params:');
-    console.log(req.params);
-    console.log('\nreq.body:');
-    console.log(req.body);
-    next();
-};
-app.use(consoleLog);
-
+// middleware
 const checkMemberExistence = (req, res, next) => {
     console.log('in checkMemberExistence middleware');
 
@@ -154,6 +135,11 @@ app.delete('/NightRaid/:member', checkMemberExistence, (req, res) => {
     console.log('deleting member:', getMember(member));
     members.splice(memberIndex, 1);
     return res.status(204).json();
+});
+
+// listening to the port
+app.listen(port, () => {
+    console.log('✔️ Server started.');
 });
 
 // function to take the parameter type to avoid code repetition

@@ -43,7 +43,7 @@ In general, there is more information in the video and commented in the code abo
 
 ## 📖 Cloning the Project
 
-To clone and run this project on your computer you will need [Git](https://git-scm.com/), [Node.js v18.12.0](https://nodejs.org/en/) or higher, and preferably an API Client such as [Insomnia](https://insomnia.rest/) (it can also be accessed through the browser, but with limited functionalities) previously installed.<br>In the terminal:
+To clone and run this project on your computer you will need [Git](https://git-scm.com/), [Node.js v16.13.0](https://nodejs.org/en/) or higher, and preferably an API Client such as [Insomnia](https://insomnia.rest/) (it can also be accessed through the browser, but with limited functionalities) previously installed.<br>In the terminal:
 
 ```bash
 # Clone this repository with:

@@ -12,44 +12,57 @@
 </table>
 <br>
 
-# NightRaid
-This was a project that I used as a testing environment to explore a little about what I was studying at the moment: <strong>Nodejs, Expressjs, HTTP methods and params.</strong>
-<br><br>
+# 🧐 Node Environment Exploration
 
-## About
-My goal was to create something simple with such technologies, so I thought I'd create a page for <a href="https://akamegakill.fandom.com/wiki/Night_Raid">NightRaid</a>, already with all the main members listed, and with the ability to add new members, update them, or delete them.
+<br>
+<p align="center">
+  <a href="#-project-video-presentation">Video</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-about">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-cloning-the-project">Cloning</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-contributor-contact">Contact</a>
+</p>
+<br>
+
+## 📹 Project Video Presentation
+<div align="center">
+  <video src="https://user-images.githubusercontent.com/86276393/164738153-1c1c7df2-d5a3-46e7-9417-27c00df6e321.mp4" />
+</div>
+
+> **If the video has any errors, reload the page!**<br>
+
+## 📝 About
+
+This was a project that I used as a testing environment to explore a little about what I was studying at the moment: <b>Nodejs, Expressjs, HTTP methods and params.</b>
+<br>
+
+My goal was to create something simple with such technologies, so I thought I'd create a page for [NightRaid](https://akamegakill.fandom.com/wiki/Night_Raid), already with all the main members listed, and with the ability to add new members, update them, or delete them.
 Even though it's a little incoherent in a back-end project, in the <code>GET</code> type routes I put a visual response as default, but the <code>.Json</code> can be accessed if the parameter <code>?returnJson=true</code> or <code>"returnJson": true</code> is passed as shown in the video.<br>
 A member can be accessed/manipulated either by its <code>array index</code> or by its <code>name</code>.<br>
 In general, there is more information in the video and commented in the code about the request patterns, explanations about the routes...
 <br><br>
 
-## Result
-<p align="center">
-  <video src="https://user-images.githubusercontent.com/86276393/164738153-1c1c7df2-d5a3-46e7-9417-27c00df6e321.mp4">
-</p>
-<br>
+## 📖 Cloning the Project
 
-## How to Use
-<p>To clone and run this application, you'll need <a href="https://git-scm.com/">Git</a> and <a href="https://nodejs.org/">Node.js v16.13.2</a> or higher installed on your computer.<br>In terminal:</p>
+To clone and run this project on your computer you will need [Git](https://git-scm.com/), [Node.js v18.12.0](https://nodejs.org/en/) or higher, and preferably an API Client such as [Insomnia](https://insomnia.rest/) (it can also be accessed through the browser, but with limited functionalities) previously installed.<br>In the terminal:
 
 ```bash
-# Clone this repository
-$ git clone https://github.com/Luk4x/DevClub-first-project-node.git
+# Clone this repository with:
+> git clone https://github.com/Luk4x/node-environment-exploration.git
 
-# Go into the repository
-$ cd DevClub-first-project-node
+# Enter the repository with:
+> cd node-environment-exploration
 
-# Install dependencies
-$ npm i
+# Install dependencies with: 
+> npm install
 
-# Run the project
-$ npm run app
+# Run the project with:
+> npm run app
 
-# The server will start at http://localhost:3000/
+# Once this is done, you will be able to access the project through the link that will appear in the terminal! (something like http://localhost:3000/)
 ```
-<br>
 
-## Contributors Contact
+## 🤝 Contributor Contact
+
 <table>
   <tr>
     <td align="center">
@@ -62,3 +75,7 @@ $ npm run app
     </td>
   </tr>
 </table>
+
+<p align="right">
+  <a href="#-node-environment-exploration">Back to Top</a>
+</p>

@@ -28,6 +28,8 @@
   <video src="https://user-images.githubusercontent.com/86276393/164738153-1c1c7df2-d5a3-46e7-9417-27c00df6e321.mp4" />
 </div>
 
+> **Caso o vídeo apresente algum erro, recarregue a página!**<br>
+
 ## 📝 Sobre
 
 Este foi um projeto que usei como ambiente de testes para explorar um pouco sobre o que estava estudando no momento: <b>Nodejs, Expressjs, métodos e params HTTP.</b>

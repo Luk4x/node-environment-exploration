@@ -64,17 +64,38 @@ To clone and run this project on your computer you will need [Git](https://git-s
 
 ## 🤝 Contributor Contact
 
-<table>
+<table border="2">
   <tr>
     <td align="center">
-      <a href="https://www.linkedin.com/in/lucasmacielf/">
-        <img src="https://avatars.githubusercontent.com/Luk4x" width="150px;" alt="Luk4x Github Photo"/><br>
-        <sub>
-          <b>Lucas Maciel</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
+      <details>
+        <summary>
+          <b><a href="https://cursos.alura.com.br/vitrinedev/lucasmacielf">Vitrine.Dev</a> 🪟</b>
+          <table>
+            <tr>
+              <td align="center">
+                <a href="https://github.com/Luk4x">
+                  <img src="https://avatars.githubusercontent.com/Luk4x" width="150px;" alt="Luk4x Github Photo"/>
+                </a>
+                <br>
+                <a href="https://www.linkedin.com/in/lucasmacielf/">
+                  <sub>
+                    <b>Lucas Maciel</b>
+                  </sub>
+                </a>
+              </td>
+            </tr>
+          </table>
+        </summary>
+
+| :placard: Vitrine.Dev | Lucas Maciel |
+| -------------  | --- |
+| :sparkles: Name        | **🧐 Node Environment Exploration**
+| :label: Technologies | javascript, nodejs, expressjs, http
+| :camera: Img         | ![](https://user-images.githubusercontent.com/86276393/202922123-fd34595f-c58e-4141-84ac-01228a4cb377.png#vitrinedev)
+
+</details>
+</td>
+</tr>
 </table>
 
 <p align="right">
